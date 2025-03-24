@@ -51,12 +51,78 @@ function tree() {
     }
   };
 
+  function printroot() {
+    prettyPrint(root);
+  }
+
+  function insert(value) {
+    let rootent = root;
+    let previous;
+    while (rootent) {
+      previous = rootent;
+      if (rootent.data === value) {
+        return console.log("Already Exist");
+      } else if (rootent.data > value) {
+        rootent = rootent.left;
+      } else {
+        rootent = rootent.right;
+      }
+    }
+    if (previous.data > value) {
+      previous.left = node(value);
+    } else {
+      previous.right = node(value);
+    }
+  }
+
+  function min(root) {
+    root = root.right;
+    while (root !== null && root.left !== null) {
+      root = root.left;
+    }
+    return root;
+  }
+
+  function deleteNode(root, value) {
+    if (root === null) {
+      return root;
+    }
+    if (value < root.data) {
+      root.left = deleteNode(root.left, value);
+    } else if (value > root.data) {
+      root.right = deleteNode(root.right, value);
+    } else {
+      //case 1: No child
+      if (root.left === null && root.right === null) {
+        return null;
+      }
+      //case 2: One child
+      if (root.left === null) {
+        return root.right;
+      } else if (root.right === null) {
+        return root.left;
+      }
+      //case 3: Two children
+      let succ = min(root);
+      root.data = succ.data;
+      root.right = deleteNode(root.right, root.data);
+    }
+    return root;
+  }
+
+  function deleteItem(value) {
+    root = deleteNode(root, value);
+  }
+
   return {
     buildTree,
-    prettyPrint,
+    printroot,
+    insert,
+    deleteItem,
   };
 }
 const test = tree();
-// console.log(test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]));
-// test.buildTree([5, 3, 4, 2, 9, 6, 2, 4, 5, 2]);
-test.prettyPrint(test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]));
+test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
+test.printroot();
+test.deleteItem(3);
+test.printroot();
