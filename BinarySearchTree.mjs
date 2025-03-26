@@ -114,15 +114,34 @@ function tree() {
     root = deleteNode(root, value);
   }
 
+  function find(value) {
+    let current = root;
+    let previous;
+    if (current === null) {
+      return console.log("Not Found");
+    }
+    while (current) {
+      previous = current;
+      if (value === current.data) {
+        return prettyPrint(current);
+      } else if (value < current.data) {
+        current = current.left;
+      } else if (value > current.data) {
+        current = current.right;
+      }
+    }
+    return console.log("Not Found");
+  }
+
   return {
     buildTree,
     printroot,
     insert,
     deleteItem,
+    find,
   };
 }
 const test = tree();
 test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
 test.printroot();
-test.deleteItem(3);
-test.printroot();
+test.find(2);
