@@ -148,6 +148,10 @@ function tree() {
     return console.log(outPut);
   }
 
+  // (7) Write a function for InOrder, preOrder and postOrder
+  //Nodes from the left subtree get visited first,
+  //followed by the root node and right subtree.
+  //Such a traversal visits all the nodes in the order of non-decreasing key sequence.
   function inOrderFunction(root) {
     if (root === null) {
       return;
@@ -156,11 +160,11 @@ function tree() {
     console.log(root.data);
     inOrderFunction(root.right);
   }
-
   function inOrder() {
     return inOrderFunction(root);
   }
 
+  //The root node gets visited first, followed by left and right subtrees.
   function preOrderFunction(root) {
     if (root === null) {
       return;
@@ -169,11 +173,12 @@ function tree() {
     preOrderFunction(root.left);
     preOrderFunction(root.right);
   }
-
   function preOrder() {
     return preOrderFunction(root);
   }
 
+  //Nodes from the left subtree get visited first,
+  //followed by the right subtree, and finally, the root.
   function postOrderFunction(root) {
     if (root === null) {
       return;
@@ -182,7 +187,6 @@ function tree() {
     postOrderFunction(root.right);
     console.log(root.data);
   }
-
   function postOrder() {
     return postOrderFunction(root);
   }
