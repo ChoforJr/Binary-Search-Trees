@@ -24,7 +24,11 @@ function tree() {
 
     return root;
   }
-
+  //Write a buildTree(array) function that takes an array of data
+  //(e.g., [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]) and
+  //turns it into a balanced binary tree full of Node objects
+  //appropriately placed (don’t forget to sort and remove duplicates!).
+  //The buildTree function should return the level-0 root node
   function buildTree(array) {
     //sorted Without Dublicates
     const arr = [...new Set(mergeSort(array))];
@@ -34,6 +38,10 @@ function tree() {
     return root;
   }
 
+  //If you would like to visualize your binary search tree,
+  //here is a prettyPrint() function that will console.log
+  //your tree in a structured format. This function will expect
+  //to receive the root of your tree as the value for the node parameter
   const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -46,11 +54,11 @@ function tree() {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   };
-
   function printroot() {
     prettyPrint(root);
   }
 
+  //A function that adds a value to tree
   function insert(value) {
     let rootent = root;
     let previous;
@@ -71,6 +79,7 @@ function tree() {
     }
   }
 
+  //This is part of the delete function
   function min(root) {
     root = root.right;
     while (root !== null && root.left !== null) {
@@ -78,6 +87,7 @@ function tree() {
     }
     return root;
   }
+  //This function delete a value from the tree
   function deleteNode(root, value) {
     if (root === null) {
       return root;
@@ -108,6 +118,7 @@ function tree() {
     root = deleteNode(root, value);
   }
 
+  //function that returns the node with the given value
   function find(value) {
     let current = root;
     let previous;
@@ -127,6 +138,9 @@ function tree() {
     return console.log("Not Found");
   }
 
+  //Level Order Traversal technique is a method to traverse
+  //a Tree such that all nodes present in the same level are
+  //traversed completely before traversing the next level
   function levelOrder() {
     if (root === null) return console.log("Empty");
     let queue = [root];
@@ -139,6 +153,7 @@ function tree() {
       if (current.right !== null) queue.push(current.right);
       queue.shift();
     }
+    console.log("Level-Order Traversal");
     return console.log(outPut);
   }
 
@@ -146,45 +161,55 @@ function tree() {
   //Nodes from the left subtree get visited first,
   //followed by the root node and right subtree.
   //Such a traversal visits all the nodes in the order of non-decreasing key sequence.
-  function inOrderFunction(root) {
+  function inOrderFunction(root, array) {
     if (root === null) {
       return;
     }
-    inOrderFunction(root.left);
-    console.log(root.data);
-    inOrderFunction(root.right);
+    inOrderFunction(root.left, array);
+    array.push(root.data);
+    inOrderFunction(root.right, array);
   }
   function inOrder() {
-    return inOrderFunction(root);
+    console.log("In-Order Traversal");
+    let arr = [];
+    inOrderFunction(root, arr);
+    return console.log(arr);
   }
 
   //The root node gets visited first, followed by left and right subtrees.
-  function preOrderFunction(root) {
+  function preOrderFunction(root, array) {
     if (root === null) {
       return;
     }
-    console.log(root.data);
-    preOrderFunction(root.left);
-    preOrderFunction(root.right);
+    array.push(root.data);
+    preOrderFunction(root.left, array);
+    preOrderFunction(root.right, array);
   }
   function preOrder() {
-    return preOrderFunction(root);
+    console.log("Pre-Order Traversal");
+    let arr = [];
+    preOrderFunction(root, arr);
+    return console.log(arr);
   }
 
   //Nodes from the left subtree get visited first,
   //followed by the right subtree, and finally, the root.
-  function postOrderFunction(root) {
+  function postOrderFunction(root, array) {
     if (root === null) {
       return;
     }
-    postOrderFunction(root.left);
-    postOrderFunction(root.right);
-    console.log(root.data);
+    postOrderFunction(root.left, array);
+    postOrderFunction(root.right, array);
+    array.push(root.data);
   }
   function postOrder() {
-    return postOrderFunction(root);
+    console.log("Post-Order Traversal");
+    let arr = [];
+    postOrderFunction(root, arr);
+    return console.log(arr);
   }
 
+  //This is part of the hieght function
   function max(a, b) {
     if (a > b) {
       return a;
@@ -198,6 +223,9 @@ function tree() {
     if (node === null) return -1;
     return max(heightFunction(node.left), heightFunction(node.right)) + 1;
   }
+  //function that returns the given node’s height.
+  //Height is defined as the number of edges in the longest
+  //path from a given node to a leaf node
   function height(value) {
     let current = root;
     let previous;
@@ -215,6 +243,9 @@ function tree() {
     return heightFunction(current);
   }
 
+  //function that returns the given node’s depth.
+  //Depth is defined as the number of edges in the path
+  //from a given node to the tree’s root node
   function depth(value) {
     let current = root;
     let counter = 0;
@@ -235,6 +266,10 @@ function tree() {
     return counter;
   }
 
+  //function that checks if the tree is balanced.
+  //A balanced tree is one where the difference between
+  //heights of the left subtree and the right subtree of
+  //every node is not more than 1
   function isBalanced() {
     if (root === null) return console.log("Tree is Empty");
     let left = height(root.left.data);
@@ -247,6 +282,7 @@ function tree() {
     }
   }
 
+  //This i spart of the rebalance function
   function nodeToArray(root, array) {
     if (root === null) {
       return;
@@ -255,6 +291,7 @@ function tree() {
     array.push(root.data);
     nodeToArray(root.right, array);
   }
+  //function that rebalances an unbalanced tree
   function rebalance() {
     let arr = [];
     nodeToArray(root, arr);
@@ -278,16 +315,24 @@ function tree() {
   };
 }
 const test = tree();
-test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
+test.buildTree([1, 3, 32, 12, 77, 3, 55, 14, 90, 44, 26, 85]);
 test.printroot();
 console.log(test.isBalanced());
-// test.inOrder();
-test.insert(11);
-test.insert(12);
-test.insert(15);
-console.log(test.isBalanced());
+test.levelOrder();
+test.inOrder();
+test.preOrder();
+test.postOrder();
+test.insert(111);
+test.insert(102);
+test.insert(150);
+test.insert(350);
+test.insert(278);
 test.printroot();
-// test.inOrder();
+console.log(test.isBalanced());
 test.rebalance();
-console.log(test.isBalanced());
 test.printroot();
+console.log(test.isBalanced());
+test.levelOrder();
+test.inOrder();
+test.preOrder();
+test.postOrder();
