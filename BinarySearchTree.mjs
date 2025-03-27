@@ -235,6 +235,18 @@ function tree() {
     return counter;
   }
 
+  function isBalanced() {
+    if (root === null) return console.log("Tree is Empty");
+    let left = height(root.left.data);
+    let right = height(root.right.data);
+    let difference = Math.abs(left - right);
+    if (difference <= 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return {
     buildTree,
     printroot,
@@ -247,9 +259,10 @@ function tree() {
     postOrder,
     height,
     depth,
+    isBalanced,
   };
 }
 const test = tree();
 test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
 test.printroot();
-console.log(test.depth(9));
+console.log(test.isBalanced());
