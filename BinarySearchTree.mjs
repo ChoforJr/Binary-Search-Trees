@@ -14,16 +14,12 @@ function tree() {
   function createBST(arr, start, end) {
     if (start > end) return null;
 
-    // Find the middle element
     let mid = start + Math.floor((end - start) / 2);
 
-    // Create root node
     let root = node(arr[mid]);
 
-    // Create left subtree
     root.left = createBST(arr, start, mid - 1);
 
-    // Create right subtree
     root.right = createBST(arr, mid + 1, end);
 
     return root;
@@ -82,7 +78,6 @@ function tree() {
     }
     return root;
   }
-
   function deleteNode(root, value) {
     if (root === null) {
       return root;
@@ -109,7 +104,6 @@ function tree() {
     }
     return root;
   }
-
   function deleteItem(value) {
     root = deleteNode(root, value);
   }
@@ -221,6 +215,26 @@ function tree() {
     return heightFunction(current);
   }
 
+  function depth(value) {
+    let current = root;
+    let counter = 0;
+    if (current.data === value) {
+      return 0;
+    }
+    while (current) {
+      if (value === current.data) {
+        break;
+      } else if (value < current.data) {
+        counter++;
+        current = current.left;
+      } else if (value > current.data) {
+        counter++;
+        current = current.right;
+      }
+    }
+    return counter;
+  }
+
   return {
     buildTree,
     printroot,
@@ -232,9 +246,10 @@ function tree() {
     preOrder,
     postOrder,
     height,
+    depth,
   };
 }
 const test = tree();
 test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
 test.printroot();
-console.log(test.height(2));
+console.log(test.depth(9));
