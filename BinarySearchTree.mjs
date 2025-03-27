@@ -191,6 +191,36 @@ function tree() {
     return postOrderFunction(root);
   }
 
+  function max(a, b) {
+    if (a > b) {
+      return a;
+    } else if (a < b) {
+      return b;
+    } else {
+      return a;
+    }
+  }
+  function heightFunction(node) {
+    if (node === null) return -1;
+    return max(heightFunction(node.left), heightFunction(node.right)) + 1;
+  }
+  function height(value) {
+    let current = root;
+    let previous;
+    if (current === null) return;
+    while (current) {
+      previous = current;
+      if (value === current.data) {
+        break;
+      } else if (value < current.data) {
+        current = current.left;
+      } else if (value > current.data) {
+        current = current.right;
+      }
+    }
+    return heightFunction(current);
+  }
+
   return {
     buildTree,
     printroot,
@@ -201,12 +231,10 @@ function tree() {
     inOrder,
     preOrder,
     postOrder,
+    height,
   };
 }
 const test = tree();
 test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
 test.printroot();
-// test.levelOrder();
-// test.inOrder();
-// test.preOrder();
-test.postOrder();
+console.log(test.height(2));
