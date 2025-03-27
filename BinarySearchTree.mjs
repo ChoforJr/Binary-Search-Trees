@@ -247,6 +247,20 @@ function tree() {
     }
   }
 
+  function nodeToArray(root, array) {
+    if (root === null) {
+      return;
+    }
+    nodeToArray(root.left, array);
+    array.push(root.data);
+    nodeToArray(root.right, array);
+  }
+  function rebalance() {
+    let arr = [];
+    nodeToArray(root, arr);
+    return buildTree(arr);
+  }
+
   return {
     buildTree,
     printroot,
@@ -260,9 +274,20 @@ function tree() {
     height,
     depth,
     isBalanced,
+    rebalance,
   };
 }
 const test = tree();
 test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
 test.printroot();
 console.log(test.isBalanced());
+// test.inOrder();
+test.insert(11);
+test.insert(12);
+test.insert(15);
+console.log(test.isBalanced());
+test.printroot();
+// test.inOrder();
+test.rebalance();
+console.log(test.isBalanced());
+test.printroot();
