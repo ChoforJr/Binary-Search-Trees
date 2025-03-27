@@ -148,6 +148,19 @@ function tree() {
     return console.log(outPut);
   }
 
+  function inOrderFunction(root) {
+    if (root === null) {
+      return;
+    }
+    inOrderFunction(root.left);
+    console.log(root.data);
+    inOrderFunction(root.right);
+  }
+
+  function inOrder() {
+    return inOrderFunction(root);
+  }
+
   return {
     buildTree,
     printroot,
@@ -155,9 +168,11 @@ function tree() {
     deleteItem,
     find,
     levelOrder,
+    inOrder,
   };
 }
 const test = tree();
 test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
 test.printroot();
-test.levelOrder();
+// test.levelOrder();
+test.inOrder();
