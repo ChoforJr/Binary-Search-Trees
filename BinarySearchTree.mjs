@@ -133,15 +133,31 @@ function tree() {
     return console.log("Not Found");
   }
 
+  function levelOrder() {
+    if (root === null) return console.log("Empty");
+    let queue = [root];
+    let outPut = [];
+    let current;
+    while (queue.length > 0) {
+      current = queue[0];
+      outPut.push(current.data);
+      if (current.left !== null) queue.push(current.left);
+      if (current.right !== null) queue.push(current.right);
+      queue.shift();
+    }
+    return console.log(outPut);
+  }
+
   return {
     buildTree,
     printroot,
     insert,
     deleteItem,
     find,
+    levelOrder,
   };
 }
 const test = tree();
 test.buildTree([8, 7, 2, 1, 5, 3, 6, 9, 4, 5, 3, 9]);
 test.printroot();
-test.find(2);
+test.levelOrder();
